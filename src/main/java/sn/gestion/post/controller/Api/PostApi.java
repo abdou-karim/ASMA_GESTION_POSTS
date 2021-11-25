@@ -11,6 +11,8 @@ public interface PostApi {
     @PutMapping("/posts/update/{id}")
     PostDto updatePost(@RequestBody PostDto postDto,@PathVariable Long id);
     @GetMapping("/posts/list")
-    List<PostDto> findAllPosts();
+    List<PostDto> findAllPosts(@RequestParam(defaultValue = "0") Integer pageNo,
+                               @RequestParam(defaultValue = "10") Integer pageSize,
+                               @RequestParam(defaultValue = "userId") String sortBy);
 
 }

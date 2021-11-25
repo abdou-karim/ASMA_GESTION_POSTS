@@ -17,7 +17,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
-@Service
+@Service("utlisateurServiceImpl")
 @Slf4j
 @AllArgsConstructor
 public class UtlisateurServiceImpl implements UtlisateurService {

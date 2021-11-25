@@ -7,5 +7,5 @@ import java.util.List;
 public interface PostService {
     PostDto save(PostDto postDto);
     PostDto updatePost (PostDto postDto,Long id);
-    List<PostDto> findAllPosts();
+    List<PostDto> findAllPosts(Integer pageNo, Integer pageSize, String sortBy);
 }

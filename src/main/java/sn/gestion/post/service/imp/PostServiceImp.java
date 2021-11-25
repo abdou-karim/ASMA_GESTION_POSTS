@@ -2,30 +2,36 @@ package sn.gestion.post.service.imp;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 import sn.gestion.post.dto.PostDto;
-import sn.gestion.post.dto.UtlisateurDto;
 import sn.gestion.post.exception.EntityNotFoundException;
 import sn.gestion.post.exception.ErrorCodes;
 import sn.gestion.post.exception.InvalidEntityException;
 import sn.gestion.post.model.Post;
 import sn.gestion.post.model.Utilisateur;
 import sn.gestion.post.repository.PostRepository;
+import sn.gestion.post.repository.PostRepositoryPagin;
 import sn.gestion.post.repository.UtilisateurRepository;
 import sn.gestion.post.service.PostService;
 import sn.gestion.post.validator.PostValidator;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("postServiceImp")
 @Slf4j
 @AllArgsConstructor
 public class PostServiceImp implements PostService {
     UtilisateurRepository utilisateurRepository;
     PostRepository postRepository;
+    PostRepositoryPagin postRepositoryPagin;
     @Override
     public PostDto save(PostDto postDto) {
         List<String> errors = PostValidator.validate(postDto);
@@ -34,7 +40,7 @@ public class PostServiceImp implements PostService {
         }
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         Post post = new Post();
-        Utilisateur utilisateur = utilisateurRepository.findByUsernameAndArchiveFalse(auth.getPrincipal().toString()).get();
+        Utilisateur utilisateur = utilisateurRepository.findByUsernameAndArchiveFalse(auth!=null?auth.getPrincipal().toString():"sidibe").get();
         post.setTitle(postDto.getTitle());
         post.setDescription(postDto.getDescription());
         post.setUserId(utilisateur);
@@ -64,9 +70,18 @@ public class PostServiceImp implements PostService {
     }
 
     @Override
-    public List<PostDto> findAllPosts() {
-        return postRepository.findAllByArchiveFalse().stream()
-                .map(PostDto::fromEntity)
-                .collect(Collectors.toList());
+    public List<PostDto> findAllPosts(Integer pageNo, Integer pageSize, String sortBy) {
+        Pageable paging = PageRequest.of(pageNo, pageSize, Sort.by(sortBy));
+        Page<Post> pagedResult = postRepositoryPagin.findAll(paging);
+
+        if(pagedResult.hasContent()) {
+            return pagedResult.getContent().stream()
+                    .map(PostDto::fromEntity)
+                    .collect(Collectors.toList());
+        } else {
+            return postRepository.findAllByArchiveFalse().stream()
+                    .map(PostDto::fromEntity)
+                    .collect(Collectors.toList());
+        }
     }
 }

@@ -8,7 +8,7 @@ import sn.gestion.post.model.Utilisateur;
 import sn.gestion.post.repository.UtilisateurRepository;
 import sn.gestion.post.service.ApplicationService;
 
-@Service
+@Service("applicationServiceImpl")
 @Transactional
 @AllArgsConstructor
 @Log4j2

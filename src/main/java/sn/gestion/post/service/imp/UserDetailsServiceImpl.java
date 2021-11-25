@@ -13,7 +13,7 @@ import sn.gestion.post.service.ApplicationService;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("userDetailsServiceImpl")
 @AllArgsConstructor
 public class UserDetailsServiceImpl implements UserDetailsService {
     private ApplicationService applicationService;

@@ -24,8 +24,8 @@ public class PostController implements PostApi {
     }
 
     @Override
-    public List<PostDto> findAllPosts() {
-        return postService.findAllPosts();
+    public List<PostDto> findAllPosts(Integer pageNo, Integer pageSize, String sortBy) {
+        return postService.findAllPosts(pageNo, pageSize, sortBy);
     }
 
 }
