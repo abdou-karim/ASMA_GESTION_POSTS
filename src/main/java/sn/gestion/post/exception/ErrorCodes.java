@@ -8,6 +8,7 @@ public enum ErrorCodes {
   POST_NOT_FOUND(2000),
   POST_NOT_VALID(2001),
   POST_ALREADY_IN_USE(2002),
+  POST_NEVER_USED(2003)
   ;
 
 
