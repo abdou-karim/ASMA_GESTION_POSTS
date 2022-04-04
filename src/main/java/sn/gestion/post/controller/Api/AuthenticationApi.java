@@ -8,7 +8,7 @@ import sn.gestion.post.model.auth.AuthenticationResponse;
 
 public interface AuthenticationApi {
 
-  @PostMapping("/auth/login")
+  @PostMapping("/login")
   ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request);
 
 }

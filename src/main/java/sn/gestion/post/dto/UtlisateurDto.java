@@ -14,8 +14,6 @@ public class UtlisateurDto {
     private Long id;
     String username;
     String password;
-    String phoneNumber;
-    String fullName;
 
     public static UtlisateurDto fromEntity (Utilisateur utilisateur){
         if (utilisateur ==null){
@@ -23,10 +21,9 @@ public class UtlisateurDto {
         }
         return UtlisateurDto.builder()
                 .id(utilisateur.getId())
-                .fullName(utilisateur.getFullName())
                 .username(utilisateur.getUsername())
                 .password(utilisateur.getPassword())
-                .phoneNumber(utilisateur.getPhoneNumber()).build();
+                .build();
 
     }
     public static Utilisateur toEntity(UtlisateurDto utlisateurDto){
@@ -35,9 +32,7 @@ public class UtlisateurDto {
         }
         Utilisateur utilisateur = new Utilisateur();
         utilisateur.setUsername(utlisateurDto.getUsername());
-        utilisateur.setPhoneNumber(utlisateurDto.getPhoneNumber());
         utilisateur.setPassword(utlisateurDto.getPassword());
-        utilisateur.setFullName(utlisateurDto.getFullName());
         return utilisateur;
     }
 }

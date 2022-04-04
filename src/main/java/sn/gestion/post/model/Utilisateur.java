@@ -15,8 +15,4 @@ import java.util.List;
 public class Utilisateur extends AbstractEntity  {
     String username;
     String password;
-    String phoneNumber;
-    String fullName;
-    @OneToMany
-    List<Post> post;
 }
